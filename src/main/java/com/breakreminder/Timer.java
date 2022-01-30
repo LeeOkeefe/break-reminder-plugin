@@ -28,9 +28,7 @@ public class Timer
 
     public String formatDuration(Duration duration, boolean showSeconds)
     {
-        Duration time = showSeconds ? duration : roundMinutes(duration);
-
-        long hours = time.toHours();
+        long hours = duration.toHours();
 
         String format;
 
@@ -43,12 +41,12 @@ public class Timer
             format = showSeconds ? "mm:ss" : "mm";
         }
 
-        long milliseconds = time.abs().toMillis();
+        long milliseconds = duration.abs().toMillis();
 
         return DurationFormatUtils.formatDuration(milliseconds, format, false);
     }
 
-    private Duration roundMinutes(Duration duration)
+    public Duration roundMinutes(Duration duration)
     {
         if (duration.isNegative())
         {

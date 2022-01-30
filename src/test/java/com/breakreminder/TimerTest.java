@@ -53,14 +53,14 @@ public class TimerTest
         String minutes = timer.formatDuration(duration, false);
 
         assert Objects.equals(minutesAndSeconds, "2:2");
-        assert Objects.equals(minutes, "3");
+        assert Objects.equals(minutes, "2");
     }
 
     @Test
-    public void formatDurationRoundsMinutesUpWhenDisplaySecondsFalseAndDurationIsPositive()
+    public void roundMinutesRoundsUpWhenDurationIsPositive()
     {
         final int seconds = 61;
-        final boolean displaySeconds = false;
+        final int expectedMinutes = 2;
 
         Instant endTime = Instant.now().plusSeconds(seconds);
 
@@ -68,25 +68,29 @@ public class TimerTest
 
         Duration duration = timer.getDurationBetweenSystemClockAndEndTime();
 
-        String timeFormatted = timer.formatDuration(duration, displaySeconds);
+        Duration roundedDuration = timer.roundMinutes(duration);
 
-        assert timeFormatted.equals("2");
+        long minutes = roundedDuration.toMinutes();
+
+        assert minutes == expectedMinutes;
     }
 
     @Test
-    public void formatDurationRoundsMinutesDownWhenDisplaySecondsFalseAndDurationIsNegative()
+    public void roundMinutesRoundsDownWhenDurationIsNegative()
     {
         final int seconds = 61;
-        final boolean displaySeconds = false;
+        final int expectedMinutes = -1;
 
-        Instant instant = Instant.now().minusSeconds(seconds);
+        Instant endTime = Instant.now().minusSeconds(seconds);
 
-        Timer timer = new Timer(instant);
+        Timer timer = new Timer(endTime);
 
         Duration duration = timer.getDurationBetweenSystemClockAndEndTime();
 
-        String timeFormatted = timer.formatDuration(duration, displaySeconds);
+        Duration roundedDuration = timer.roundMinutes(duration);
 
-        assert timeFormatted.equals("1");
+        long minutes = roundedDuration.toMinutes();
+
+        assert minutes == expectedMinutes;
     }
 }
