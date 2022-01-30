@@ -53,7 +53,7 @@ public class BreakOverlay extends Overlay
     {
         return timeRemaining.isNegative()
             ? buildTitle("Take a break", Color.red)
-            : buildTitle("Next break:", Color.green);
+            : buildTitle("Break due", Color.green);
     }
 
     private LayoutableRenderableEntity createTimeDisplay(Duration timeRemaining, Timer timer)
@@ -64,7 +64,7 @@ public class BreakOverlay extends Overlay
 
         return timeRemaining.isNegative()
                 ? buildLine("Overdue:", Color.orange, formattedTime, Color.orange)
-                : buildLine("Current:", Color.white, formattedTime, Color.white);
+                : buildLine("Time:", Color.white, formattedTime, Color.white);
     }
 
     private LayoutableRenderableEntity createNextInterval(Timer timer)
